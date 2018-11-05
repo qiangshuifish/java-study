@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 定义如何连接目标数据库 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/test?useSSL=false"
+                        userId="root" password="1234">
+        </jdbcConnection>
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 指定生成 Java 模型对象所属的包 -->
+        <javaModelGenerator targetPackage="com.mybatisplus.generator.bean" targetProject="src\main\java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!-- 指定生成 SQL 映射文件所属的包和的目标项目 -->
+        <sqlMapGenerator targetPackage="com.mybatisplus.generator.mapper"  targetProject="src\main\resources\mapper">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+        <!-- 指定目标包和目标项目生成的客户端接口和类 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mybatisplus.generator.dao"  targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!-- 设置要生成的表名 -->
+        <table tableName="sys_menu" >
+        </table>
+
+    </context>
+</generatorConfiguration>
