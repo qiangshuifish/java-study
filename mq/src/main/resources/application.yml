@@ -1,6 +1,0 @@
-spring:
-  rabbitmq:
-    addresses:
-    host:
-    username:
-    password:

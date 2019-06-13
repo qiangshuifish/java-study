@@ -19,7 +19,8 @@ public class ConnectionUtil {
             //定义一个连接工厂
             ConnectionFactory factory = new ConnectionFactory();
             //设置服务端地址（域名地址/ip）
-            factory.setHost("rabbit.putin.ink");
+//            factory.setHost("rabbit.putin.ink");
+            factory.setHost("192.168.0.100");
             //设置服务器端口号
             factory.setPort(5672);
             //设置虚拟主机(相当于数据库中的库)
