@@ -3,19 +3,14 @@ package ink.putin.study.mq.amqp.simple;
 import ink.putin.study.mq.amqp.RabbitMqConfiguration;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author 呛水滴鱼

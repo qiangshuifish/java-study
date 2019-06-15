@@ -5,7 +5,6 @@ package ink.putin.study.mq.amqp.simple;
  * @version 1.0
  * @since 1.0
  */
-
 public class Consumer {
 
     private String exchange;
