@@ -1,6 +1,7 @@
 package com.putin.quartz;
 
 import com.putin.quartz.jobs.HelloJob;
+import com.putin.quartz.jobs.TestJobData;
 import org.quartz.*;
 
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
@@ -25,8 +26,12 @@ public class SimpleDemo {
         Scheduler scheduler = schedFact.getScheduler();
         //1. 定义一个 JobDetail
         JobDetail job = JobBuilder.newJob(HelloJob.class)
-                .withIdentity("myJob", "group1")
+                .withIdentity("helloJob", "group1")
                 .withDescription("HelloJob")
+                .build();
+        JobDetail jobData = JobBuilder.newJob(TestJobData.class)
+                .withIdentity("testJobData", "group1")
+                .withDescription("TestJobData")
                 .build();
 
         //2. 定义一个 Trigger
@@ -38,8 +43,18 @@ public class SimpleDemo {
                         .repeatForever())
                 .build();
 
+        Trigger trigger1 = TriggerBuilder.newTrigger()
+                .withIdentity("myTrigger1", "group1")
+                .startNow()
+                .withSchedule(simpleSchedule()
+                        .withIntervalInMilliseconds(1000L)
+                        .repeatForever())
+                .build();
+
         //3. 配置触发器和作业
+        //   trigger he job
         scheduler.scheduleJob(job, trigger);
+        scheduler.scheduleJob(jobData, trigger1);
 
         //4. 启动
         scheduler.start();
