@@ -21,18 +21,38 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
  */
 public class SimpleDemo {
     public static void main(String[] args) throws SchedulerException {
-        SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+        Scheduler scheduler = getScheduler();
+        //4. 启动
+        scheduler.start();
 
-        Scheduler scheduler = schedFact.getScheduler();
+        testHelloJob(scheduler);
+
+        testJobData(scheduler);
+    }
+
+    private static void testJobData(Scheduler scheduler) throws SchedulerException {
+        JobDetail jobData = JobBuilder.newJob(TestJobData.class)
+                .withIdentity("testJobData", "group1")
+                .withDescription("TestJobData")
+                .build();
+        Trigger trigger1 = TriggerBuilder.newTrigger()
+                .withIdentity("myTrigger1", "group1")
+                .startNow()
+                .withSchedule(simpleSchedule()
+                        .withIntervalInMilliseconds(1000L)
+                        .repeatForever())
+                .build();
+
+        scheduler.scheduleJob(jobData, trigger1);
+    }
+
+    private static void testHelloJob(Scheduler scheduler) throws SchedulerException {
         //1. 定义一个 JobDetail
         JobDetail job = JobBuilder.newJob(HelloJob.class)
                 .withIdentity("helloJob", "group1")
                 .withDescription("HelloJob")
                 .build();
-        JobDetail jobData = JobBuilder.newJob(TestJobData.class)
-                .withIdentity("testJobData", "group1")
-                .withDescription("TestJobData")
-                .build();
+
 
         //2. 定义一个 Trigger
         Trigger trigger = TriggerBuilder.newTrigger()
@@ -42,21 +62,13 @@ public class SimpleDemo {
                         .withIntervalInMilliseconds(1000L)
                         .repeatForever())
                 .build();
-
-        Trigger trigger1 = TriggerBuilder.newTrigger()
-                .withIdentity("myTrigger1", "group1")
-                .startNow()
-                .withSchedule(simpleSchedule()
-                        .withIntervalInMilliseconds(1000L)
-                        .repeatForever())
-                .build();
-
         //3. 配置触发器和作业
-        //   trigger he job
+        //   trigger 和 job 一一对应
         scheduler.scheduleJob(job, trigger);
-        scheduler.scheduleJob(jobData, trigger1);
+    }
 
-        //4. 启动
-        scheduler.start();
+    private static Scheduler getScheduler() throws SchedulerException {
+        SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+        return schedFact.getScheduler();
     }
 }
