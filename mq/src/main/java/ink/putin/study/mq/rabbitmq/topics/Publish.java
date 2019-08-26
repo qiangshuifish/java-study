@@ -64,5 +64,14 @@ public class Publish {
         System.out.println("Publish send ：" + message6);
         channel.close();
         connection.close();
+
+        /*
+         * Publish send ：TOPIC 路由消息 user.*
+         * Publish send ：TOPIC 路由消息 user.#
+         * Publish send ：TOPIC 路由消息 user.list
+         * Publish send ：TOPIC 路由消息 user.list.1
+         * Publish send ：TOPIC 路由消息 user.list.1.10
+         * Publish send ：TOPIC 路由消息 user
+         */
     }
 }

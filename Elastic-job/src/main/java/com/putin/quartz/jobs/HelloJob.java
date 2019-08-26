@@ -24,7 +24,12 @@ public class HelloJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JobDetail jobDetail = context.getJobDetail();
-        String format = MessageFormat.format("定时任务 {0},定时任务描述 {1} ", jobDetail.getKey(), jobDetail.getDescription());
+        String format = MessageFormat.format("============ 定时任务 {0},定时任务描述 {1} ============", jobDetail.getKey(), jobDetail.getDescription());
         System.out.println(format);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

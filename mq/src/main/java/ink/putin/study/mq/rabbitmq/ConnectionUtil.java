@@ -20,15 +20,15 @@ public class ConnectionUtil {
             ConnectionFactory factory = new ConnectionFactory();
             //设置服务端地址（域名地址/ip）
 //            factory.setHost("rabbit.putin.ink");
-            factory.setHost("192.168.0.101");
+            factory.setHost("47.104.128.114");
             //设置服务器端口号
             factory.setPort(5672);
             //设置虚拟主机(相当于数据库中的库)
             factory.setVirtualHost("/");
             //设置用户名
-            factory.setUsername("rabbitmq");
+            factory.setUsername("admin");
             //设置密码
-            factory.setPassword("mima1234");
+            factory.setPassword("admin");
             connection = factory.newConnection();
             return connection;
         } catch (Exception e) {

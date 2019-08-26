@@ -3,6 +3,11 @@ package com.putin.quartz;
 import com.putin.quartz.jobs.HelloJob;
 import com.putin.quartz.jobs.TestJobData;
 import org.quartz.*;
+import org.quartz.impl.jdbcjobstore.StdRowLockSemaphore;
+
+import java.text.ParseException;
+import java.util.Properties;
+import java.util.Random;
 
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
@@ -20,47 +25,58 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
  * @since 1.0
  */
 public class SimpleDemo {
-    public static void main(String[] args) throws SchedulerException {
+    public static void main(String[] args) throws SchedulerException, ParseException, InterruptedException {
+
+
+        System.out.println(StdRowLockSemaphore.SELECT_FOR_LOCK);
         Scheduler scheduler = getScheduler();
+
+
+//        testHelloJob(scheduler);
+        for (int i = 0; i < 100; i++) {
+            testJobData(scheduler,i);
+            Thread.sleep(100);
+        }
         //4. 启动
         scheduler.start();
-
-        testHelloJob(scheduler);
-
-        testJobData(scheduler);
     }
 
-    private static void testJobData(Scheduler scheduler) throws SchedulerException {
+    private static void testJobData(Scheduler scheduler,int i) throws SchedulerException {
+        JobDataMap newJobDataMap = new JobDataMap();
+
+        newJobDataMap.putAsString("count",0);
+
+
+
         JobDetail jobData = JobBuilder.newJob(TestJobData.class)
-                .withIdentity("testJobData", "group1")
+                .withIdentity("testJobData"+i, "hello")
                 .withDescription("TestJobData")
+                .usingJobData("count",1)
                 .build();
         Trigger trigger1 = TriggerBuilder.newTrigger()
-                .withIdentity("myTrigger1", "group1")
+                .withIdentity("myTrigger"+i, "hello")
                 .startNow()
                 .withSchedule(simpleSchedule()
-                        .withIntervalInMilliseconds(1000L)
-                        .repeatForever())
+                        .withIntervalInMilliseconds(i+1*1000L)
+                        )
                 .build();
 
         scheduler.scheduleJob(jobData, trigger1);
     }
 
-    private static void testHelloJob(Scheduler scheduler) throws SchedulerException {
+    private static void testHelloJob(Scheduler scheduler) throws SchedulerException, ParseException {
         //1. 定义一个 JobDetail
         JobDetail job = JobBuilder.newJob(HelloJob.class)
-                .withIdentity("helloJob", "group1")
+                .withIdentity("helloJob", "hello")
                 .withDescription("HelloJob")
                 .build();
 
 
         //2. 定义一个 Trigger
         Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("myTrigger", "group1")
+                .withIdentity("myTrigger", "hello")
                 .startNow()
-                .withSchedule(simpleSchedule()
-                        .withIntervalInMilliseconds(1000L)
-                        .repeatForever())
+                .withSchedule(CronScheduleBuilder.cronSchedule("0/20 * * * * ?"))
                 .build();
         //3. 配置触发器和作业
         //   trigger 和 job 一一对应
@@ -68,7 +84,8 @@ public class SimpleDemo {
     }
 
     private static Scheduler getScheduler() throws SchedulerException {
-        SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
+        Properties quartzProperties = QuartzProperties.getQuartzProperties("hello");
+        SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory(quartzProperties);
         return schedFact.getScheduler();
     }
 }

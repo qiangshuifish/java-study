@@ -55,31 +55,22 @@ public class Subscribe {
         subscribe6.handMsg(QUEUE_NAME + routingKey6, routingKey6);
         subscribe7.handMsg(QUEUE_NAME + routingKey7, routingKey7);
 
-        /**
+        /*
          *
-         1
-         ===== 消费者 # ：消费第 1 TOPIC 路由消息 user.*
-         ===== 消费者 # ：消费第 2 TOPIC 路由消息 user.#
-         ===== 消费者 # ：消费第 3 TOPIC 路由消息 user.list
-         ===== 消费者 # ：消费第 4 TOPIC 路由消息 user.list.1
-         ===== 消费者 # ：消费第 5 TOPIC 路由消息 user.list.1.10
-         ===== 消费者 # ：消费第 6 TOPIC 路由消息 user.list.1.10
-         2
-         ===== 消费者 * ：消费第 1 TOPIC 路由消息 user.list.1.10
-         3
-         ===== 消费者 user.# ：消费第 1 TOPIC 路由消息 user.#
-         ===== 消费者 user.# ：消费第 2 TOPIC 路由消息 user.list
-         ===== 消费者 user.# ：消费第 3 TOPIC 路由消息 user.list.1.10
-         4
-         ===== 消费者 user.* ：消费第 1 TOPIC 路由消息 user.*
-         ===== 消费者 user.* ：消费第 2 TOPIC 路由消息 user.list.1
-         ===== 消费者 user.* ：消费第 3 TOPIC 路由消息 user.list.1.10
-         5
-         ===== 消费者 user.list ：消费第 1 TOPIC 路由消息 user.list
-         6
-         ===== 消费者 user.list.1 ：消费第 1 TOPIC 路由消息 user.list.1
-         7
-         ===== 消费者 user.list.1.10 ：消费第 1 TOPIC 路由消息 user.list.1.10
+         ===== 消费者 user.list.1.10 ：消费第 1 条 ==== TOPIC 路由消息 user.list.1.10
+         ===== 消费者 user.list.1 ：消费第 1 条 ==== TOPIC 路由消息 user.list.1
+         ===== 消费者 user.list ：消费第 1 条 ==== TOPIC 路由消息 user.list
+
+         ===== 消费者 user.* ：消费第 1 条 ==== TOPIC 路由消息 user.*
+         ===== 消费者 user.* ：消费第 2 条 ==== TOPIC 路由消息 user.#
+         ===== 消费者 user.* ：消费第 3 条 ==== TOPIC 路由消息 user.list
+
+         ===== 消费者 user.# ：消费第 1 条 ==== TOPIC 路由消息 user.*
+         ===== 消费者 user.# ：消费第 2 条 ==== TOPIC 路由消息 user.#
+         ===== 消费者 user.# ：消费第 3 条 ==== TOPIC 路由消息 user.list
+         ===== 消费者 user.# ：消费第 4 条 ==== TOPIC 路由消息 user.list.1
+         ===== 消费者 user.# ：消费第 5 条 ==== TOPIC 路由消息 user.list.1.10
+         ===== 消费者 user.# ：消费第 6 条 ==== TOPIC 路由消息 user.list.1.10
          */
     }
 
